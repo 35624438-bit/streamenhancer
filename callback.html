@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StreamEnhancer — Payment Confirmation</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #0f0f19;
+      color: #e2e8f0;
+      display: flex; justify-content: center; align-items: center;
+      min-height: 100vh; text-align: center;
+    }
+    .card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px; padding: 32px 40px; max-width: 420px;
+    }
+    .card h1 { font-size: 20px; margin-bottom: 8px; }
+    .status { font-size: 14px; margin-bottom: 16px; }
+    .status.success { color: #86efac; }
+    .status.error { color: #fca5a5; }
+    .status.info { color: #fde68a; }
+    .detail {
+      font-size: 12px; color: #64748b; margin-top: 16px;
+      padding: 10px; background: rgba(255,255,255,0.02);
+      border-radius: 8px; font-family: monospace;
+    }
+    .note { font-size: 11px; color: #64748b; margin-top: 16px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>🎬 StreamEnhancer</h1>
+    <div id="status" class="status info">Processing your payment...</div>
+    <div id="detail" class="detail"></div>
+    <p class="note">You can close this page after activation.</p>
+  </div>
+
+  <script>
+    /**
+     * StreamEnhancer — Payment Callback
+     * 部署到 GitHub Pages，作为 Creem 支付成功后的重定向目标
+     *
+     * 使用: https://YOUR_USERNAME.github.io/streamenhancer-callback/?status=success&subscription_id=xxx&plan=yearly
+     */
+
+    // ⚠️ 部署时替换为你的实际 Extension ID
+    const EXTENSION_ID = 'YOUR_EXTENSION_ID';
+
+    (function () {
+      const statusDiv = document.getElementById('status');
+      const detailDiv = document.getElementById('detail');
+      const params = new URLSearchParams(window.location.search);
+
+      const paymentStatus = params.get('status') || 'unknown';
+      const subscriptionId = params.get('subscription_id') || 'N/A';
+      const plan = params.get('plan') || 'unknown';
+
+      detailDiv.innerHTML = `
+        Subscription: ${subscriptionId}<br>
+        Plan: ${plan}<br>
+        Extension ID: ${EXTENSION_ID}
+      `;
+
+      if (EXTENSION_ID === 'YOUR_EXTENSION_ID') {
+        statusDiv.className = 'status info';
+        statusDiv.textContent = '⚠️ Extension ID not configured';
+        detailDiv.innerHTML += '<br><br>Replace YOUR_EXTENSION_ID with the actual ID from chrome://extensions';
+        return;
+      }
+
+      if (paymentStatus !== 'success') {
+        statusDiv.className = 'status error';
+        statusDiv.textContent = '❌ Payment was not successful';
+        return;
+      }
+
+      // 通知 Chrome Extension
+      chrome.runtime.sendMessage(EXTENSION_ID, {
+        type: 'PAYMENT_SUCCESS',
+        data: {
+          subscriptionId: subscriptionId,
+          plan: plan,
+          status: paymentStatus,
+          timestamp: new Date().toISOString()
+        }
+      }, (response) => {
+        if (chrome.runtime.lastError) {
+          statusDiv.className = 'status error';
+          statusDiv.textContent = '❌ Failed to activate extension';
+          detailDiv.innerHTML += '<br><br>Error: ' + chrome.runtime.lastError.message;
+          detailDiv.innerHTML += '<br><br>Please make sure StreamEnhancer is installed and enabled.';
+        } else {
+          statusDiv.className = 'status success';
+          statusDiv.textContent = '✅ Premium Activated!';
+          detailDiv.innerHTML += '<br><br>Return to your streaming site and refresh the page.';
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
