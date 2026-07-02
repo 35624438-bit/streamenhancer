@@ -55,11 +55,21 @@
       const detailDiv = document.getElementById('detail');
       const params = new URLSearchParams(window.location.search);
 
-      const paymentStatus = params.get('status') || 'unknown';
+      // Creem 实际回传的参数: checkout_id, subscription_id, product_id, order_id, customer_id
+      const checkoutId = params.get('checkout_id') || 'N/A';
       const subscriptionId = params.get('subscription_id') || 'N/A';
-      const plan = params.get('plan') || 'unknown';
+      const productId = params.get('product_id') || 'N/A';
+      const orderId = params.get('order_id') || 'N/A';
+
+      // 根据 product_id 判断方案
+      const MONTHLY_PRODUCT = 'prod_1zQISHi4HJ1bM61saBOXbP';
+      const YEARLY_PRODUCT = 'prod_4IWpaWONMvjh4LgT3dYq89';
+      let plan = 'unknown';
+      if (productId === MONTHLY_PRODUCT) plan = 'monthly';
+      else if (productId === YEARLY_PRODUCT) plan = 'yearly';
 
       detailDiv.innerHTML = `
+        Checkout: ${checkoutId}<br>
         Subscription: ${subscriptionId}<br>
         Plan: ${plan}<br>
         Extension ID: ${EXTENSION_ID}
@@ -67,14 +77,7 @@
 
       if (EXTENSION_ID === 'YOUR_EXTENSION_ID') {
         statusDiv.className = 'status info';
-        statusDiv.textContent = '⚠️ Extension ID not configured';
-        detailDiv.innerHTML += '<br><br>Replace YOUR_EXTENSION_ID with the actual ID from chrome://extensions';
-        return;
-      }
-
-      if (paymentStatus !== 'success') {
-        statusDiv.className = 'status error';
-        statusDiv.textContent = '❌ Payment was not successful';
+        statusDiv.textContent = 'Extension ID not configured';
         return;
       }
 
@@ -82,9 +85,11 @@
       chrome.runtime.sendMessage(EXTENSION_ID, {
         type: 'PAYMENT_SUCCESS',
         data: {
+          checkoutId: checkoutId,
           subscriptionId: subscriptionId,
+          productId: productId,
           plan: plan,
-          status: paymentStatus,
+          orderId: orderId,
           timestamp: new Date().toISOString()
         }
       }, (response) => {
