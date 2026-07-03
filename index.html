@@ -3,101 +3,126 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Privacy Policy — StreamEnhancer</title>
+  <title>StreamEnhancer — Video Speed & Skip for Streaming</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: system-ui, -apple-system, sans-serif;
-      background: #0f0f19; color: #e2e8f0;
-      max-width: 720px; margin: 0 auto; padding: 48px 24px;
-      line-height: 1.7; font-size: 15px;
-    }
-    h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
-    h2 { font-size: 20px; font-weight: 600; margin: 32px 0 12px; color: #c4b5fd; }
-    h3 { font-size: 16px; font-weight: 600; margin: 20px 0 8px; }
-    p, li { color: #94a3b8; }
-    ul { padding-left: 20px; margin: 8px 0; }
-    li { margin: 4px 0; }
-    table { width: 100%; border-collapse: collapse; margin: 12px 0; }
-    th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 14px; }
-    th { color: #e2e8f0; font-weight: 600; }
-    td { color: #94a3b8; }
-    .updated { font-size: 13px; color: #64748b; margin-bottom: 24px; }
-    .summary { background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.2); border-radius: 8px; padding: 16px; margin: 16px 0; }
-    .summary p { color: #86efac; font-weight: 500; }
-    a { color: #6366f1; }
-    hr { border: none; border-top: 1px solid rgba(255,255,255,0.06); margin: 32px 0; }
-    .footer { font-size: 12px; color: #475569; margin-top: 48px; }
+    body { font-family: system-ui, -apple-system, sans-serif; background: #0f0f19; color: #e2e8f0; line-height: 1.6; }
+    .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+    .hero { text-align: center; padding: 80px 0 60px; }
+    .hero h1 { font-size: 48px; font-weight: 800; background: linear-gradient(135deg, #a78bfa, #6366f1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 16px; }
+    .hero p { font-size: 18px; color: #94a3b8; max-width: 600px; margin: 0 auto; }
+    .hero .cta { display: inline-block; margin-top: 24px; padding: 14px 32px; background: #6366f1; color: #fff; border-radius: 10px; font-size: 16px; font-weight: 600; text-decoration: none; }
+    .hero .cta:hover { background: #4f46e5; }
+    .features { padding: 60px 0; }
+    .features h2 { text-align: center; font-size: 28px; margin-bottom: 40px; }
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+    .feature-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 28px; }
+    .feature-card h3 { font-size: 18px; margin-bottom: 8px; color: #c4b5fd; }
+    .feature-card p { color: #94a3b8; font-size: 14px; }
+    .pricing { padding: 60px 0; text-align: center; }
+    .pricing h2 { font-size: 28px; margin-bottom: 40px; }
+    .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 640px; margin: 0 auto; }
+    .pricing-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 32px; position: relative; }
+    .pricing-card.featured { border-color: rgba(99,102,241,0.4); background: rgba(99,102,241,0.06); }
+    .pricing-card h3 { font-size: 20px; margin-bottom: 12px; }
+    .pricing-card .price { font-size: 40px; font-weight: 800; margin-bottom: 4px; }
+    .pricing-card .price span { font-size: 16px; font-weight: 400; color: #64748b; }
+    .pricing-card .save { color: #86efac; font-size: 13px; margin-bottom: 16px; }
+    .pricing-card ul { list-style: none; text-align: left; margin: 20px 0; }
+    .pricing-card li { padding: 6px 0; color: #94a3b8; font-size: 14px; }
+    .badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #6366f1; color: #fff; font-size: 12px; font-weight: 600; padding: 4px 14px; border-radius: 20px; }
+    .platforms { padding: 60px 0; text-align: center; }
+    .platforms h2 { font-size: 20px; margin-bottom: 24px; color: #94a3b8; }
+    .platform-list { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; }
+    .platform-list span { padding: 8px 20px; background: rgba(255,255,255,0.04); border-radius: 8px; font-size: 18px; font-weight: 600; }
+    footer { border-top: 1px solid rgba(255,255,255,0.06); padding: 32px 0; text-align: center; font-size: 13px; color: #475569; margin-top: 40px; }
+    footer a { color: #6366f1; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
-  <h1>Privacy Policy for StreamEnhancer</h1>
-  <p class="updated">Last Updated: July 2, 2026</p>
+  <section class="hero container">
+    <h1>StreamEnhancer</h1>
+    <p>Speed control, intro skipping, and playback shortcuts across YouTube, Netflix, Prime Video, Disney+, and Max. One lightweight extension, all your streaming platforms.</p>
+    <a href="https://chromewebstore.google.com/detail/ofaldaomhncbhnhaaffifppbbdjbhelk" class="cta">Add to Chrome — It's Free</a>
+  </section>
 
-  <div class="summary">
-    <p><strong>TL;DR:</strong> StreamEnhancer does not collect, store, or transmit any personal information. All data stays on your device. Period.</p>
-  </div>
+  <section class="features container">
+    <h2>Why StreamEnhancer?</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <h3>Speed Control (0.25x–4x)</h3>
+        <p>12 precise speed steps with keyboard shortcuts. Watch at your own pace, across every platform.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Skip Intros & Recaps</h3>
+        <p>One shortcut (Shift+\) to jump past opening credits and recaps. Reclaim 3–5 minutes per episode.</p>
+      </div>
+      <div class="feature-card">
+        <h3>5 Platforms, One Tool</h3>
+        <p>YouTube, Netflix, Prime Video, Disney+, and Max. Consistent controls everywhere you watch.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Keyboard-Driven</h3>
+        <p>Speed up, slow down, skip, reset, hide — all without touching the mouse. Built for power users.</p>
+      </div>
+      <div class="feature-card">
+        <h3>100% Private</h3>
+        <p>Everything runs locally in your browser. No accounts, no tracking, no data collection. Your viewing habits are yours.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Premium Upgrade</h3>
+        <p>Advanced skip engine, cross-platform watch statistics, bilingual subtitles, and custom shortcuts.</p>
+      </div>
+    </div>
+  </section>
 
-  <h2>1. Data Collection</h2>
-  <p>StreamEnhancer <strong>does NOT collect</strong>:</p>
-  <ul>
-    <li>Personal identification information (name, email, address)</li>
-    <li>Browsing history or website content</li>
-    <li>Video content or streaming credentials</li>
-    <li>Location data or IP addresses</li>
-    <li>Any data that could identify you personally</li>
-  </ul>
+  <section class="pricing container">
+    <h2>Simple, Transparent Pricing</h2>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <h3>Monthly</h3>
+        <div class="price">$3.99<span>/month</span></div>
+        <ul>
+          <li>All premium features unlocked</li>
+          <li>All 5 platforms supported</li>
+          <li>Cancel anytime</li>
+        </ul>
+      </div>
+      <div class="pricing-card featured">
+        <div class="badge">Best Value</div>
+        <h3>Yearly</h3>
+        <div class="price">$35.90<span>/year</span></div>
+        <div class="save">Save 25% — only $0.10/day</div>
+        <ul>
+          <li>Everything in Monthly</li>
+          <li>Early access to new features</li>
+          <li>Priority support</li>
+        </ul>
+      </div>
+    </div>
+    <p style="margin-top:20px;color:#64748b;font-size:14px;">Free tier includes speed control, basic shortcuts, and fixed-duration intro skipping. No credit card required.</p>
+  </section>
 
-  <h2>2. Local Storage</h2>
-  <p>The following data is stored <strong>exclusively on your device</strong> using Chrome's local storage API:</p>
-  <table>
-    <tr><th>Data</th><th>Purpose</th></tr>
-    <tr><td>Playback speed preference</td><td>Remember your preferred speed per platform</td></tr>
-    <tr><td>Skip intro duration</td><td>Configure how many seconds to skip</td></tr>
-    <tr><td>UI theme preference</td><td>Light/dark/auto display setting</td></tr>
-    <tr><td>Premium subscription status</td><td>Verify premium feature access locally</td></tr>
-    <tr><td>Welcome guide flag</td><td>Track whether onboarding was shown</td></tr>
-  </table>
-  <p><strong>None of this data is transmitted to any server.</strong></p>
+  <section class="platforms container">
+    <h2>Works on All Your Streaming Platforms</h2>
+    <div class="platform-list">
+      <span>YouTube</span>
+      <span>Netflix</span>
+      <span>Prime Video</span>
+      <span>Disney+</span>
+      <span>Max</span>
+    </div>
+  </section>
 
-  <h2>3. Third-Party Services</h2>
-  <h3>Creem (Payment Processing)</h3>
-  <p>When you purchase a StreamEnhancer Premium subscription, payment processing is handled entirely by <strong>Creem</strong> (<a href="https://creem.io">creem.io</a>). We do not receive or store your payment card details. Creem's privacy policy applies to all payment data.</p>
-
-  <h3>No Analytics or Tracking</h3>
-  <p>StreamEnhancer does <strong>not</strong> include Google Analytics, crash reporting, telemetry, advertising pixels, or any third-party scripts.</p>
-
-  <h2>4. Permissions Justification</h2>
-  <table>
-    <tr><th>Permission</th><th>Why Required</th></tr>
-    <tr><td><code>activeTab</code></td><td>Access video playback controls on the current streaming tab</td></tr>
-    <tr><td><code>storage</code></td><td>Save your preferences locally on your device</td></tr>
-    <tr><td>Host permissions</td><td>Inject playback controls on supported streaming platforms only</td></tr>
-  </table>
-
-  <h2>5. Data Retention and Deletion</h2>
-  <ul>
-    <li>All locally stored data is automatically removed when you uninstall the extension</li>
-    <li>You can clear data at any time: <code>chrome://extensions/</code> → StreamEnhancer → Clear data</li>
-  </ul>
-
-  <h2>6. Children's Privacy</h2>
-  <p>StreamEnhancer is not directed at children under 13. We do not knowingly collect any data from anyone.</p>
-
-  <h2>7. GDPR Compliance</h2>
-  <p>Under the EU General Data Protection Regulation: we process no personal data. All functionality operates locally in your browser. No lawful basis is required because no processing occurs.</p>
-
-  <h2>8. CPRA (California) Compliance</h2>
-  <p>Under the California Privacy Rights Act: we do not collect, sell, or share personal information. No opt-out is needed because no data collection occurs.</p>
-
-  <h2>9. Changes to This Policy</h2>
-  <p>Updates will be reflected on this page and in the Chrome Web Store listing.</p>
-
-  <hr>
-
-  <h2>Contact</h2>
-  <p>For privacy-related inquiries, contact us at the email listed in the Chrome Web Store listing or open an issue on our GitHub repository.</p>
-
-  <p class="footer">StreamEnhancer is designed with privacy-first principles. Your viewing habits are your business — not ours.</p>
+  <footer>
+    <p>&copy; 2026 StreamEnhancer. All rights reserved.</p>
+    <p style="margin-top:8px;">
+      <a href="privacy.html">Privacy Policy</a> ·
+      <a href="terms.html">Terms of Service</a> ·
+      <a href="refund.html">Refund Policy</a> ·
+      <a href="mailto:support@joycraft.dev">support@joycraft.dev</a>
+    </p>
+  </footer>
 </body>
 </html>
