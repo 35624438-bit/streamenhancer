@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PostBoost AI — Payment Confirmation</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, sans-serif; background: #0f0f19; color: #e2e8f0; display: flex; justify-content: center; align-items: center; min-height: 100vh; text-align: center; }
+    .card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 32px 40px; max-width: 420px; }
+    .card h1 { font-size: 20px; margin-bottom: 8px; }
+    .status { font-size: 14px; margin-bottom: 16px; }
+    .status.success { color: #86efac; }
+    .status.error { color: #fca5a5; }
+    .status.info { color: #fde68a; }
+    .detail { font-size: 12px; color: #64748b; margin-top: 16px; padding: 10px; background: rgba(255,255,255,0.02); border-radius: 8px; font-family: monospace; }
+    .note { font-size: 11px; color: #64748b; margin-top: 16px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>🚀 PostBoost AI</h1>
+    <div id="status" class="status info">Processing your payment...</div>
+    <div id="detail" class="detail"></div>
+    <p class="note">You can close this page after activation.</p>
+  </div>
+
+  <script>
+    const EXTENSION_ID = 'dkglflmlefpaljllopokhibnbbodjfki';
+    const MONTHLY_PRODUCT = 'prod_PLACEHOLDER_MONTHLY';
+    const YEARLY_PRODUCT = 'prod_PLACEHOLDER_YEARLY';
+    const ONETIME_PRODUCT = 'prod_PLACEHOLDER_ONETIME';
+
+    (function () {
+      const statusDiv = document.getElementById('status');
+      const detailDiv = document.getElementById('detail');
+      const params = new URLSearchParams(window.location.search);
+      const subscriptionId = params.get('subscription_id') || 'N/A';
+      const productId = params.get('product_id') || 'N/A';
+      let plan = 'unknown';
+      if (productId === MONTHLY_PRODUCT) plan = 'monthly';
+      else if (productId === YEARLY_PRODUCT) plan = 'yearly';
+      else if (productId === ONETIME_PRODUCT) plan = 'lifetime';
+
+      detailDiv.innerHTML = `Subscription: ${subscriptionId}<br>Plan: ${plan}<br>Extension ID: ${EXTENSION_ID}`;
+
+      chrome.runtime.sendMessage(EXTENSION_ID, {
+        type: 'PAYMENT_SUCCESS',
+        data: { subscriptionId, productId, plan, timestamp: new Date().toISOString() }
+      }, (response) => {
+        if (chrome.runtime.lastError) {
+          statusDiv.className = 'status info';
+          statusDiv.textContent = 'Install PostBoost AI first, then refresh.';
+          detailDiv.innerHTML += '<br><br>This page notifies your extension after payment.';
+        } else {
+          statusDiv.className = 'status success';
+          statusDiv.textContent = 'Premium Activated!';
+          detailDiv.innerHTML += '<br><br>Return to Shopee/Lazada/TikTok and refresh.';
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
