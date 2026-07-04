@@ -27,26 +27,28 @@
 
   <script>
     const EXTENSION_ID = 'icgigoffilcgmbfnadpncenkhmancjgf';
-    const MONTHLY_PRODUCT = 'prod_7i90Xm0gRwNC1I5WV6UDNi';
-    const YEARLY_PRODUCT = 'prod_3iPhvSTNBUm7WFXPAeZb5r';
-    const ONETIME_PRODUCT = '';
 
     (function () {
       const statusDiv = document.getElementById('status');
       const detailDiv = document.getElementById('detail');
       const params = new URLSearchParams(window.location.search);
       const subscriptionId = params.get('subscription_id') || 'N/A';
-      const productId = params.get('product_id') || 'N/A';
-      let plan = 'unknown';
-      if (productId === MONTHLY_PRODUCT) plan = 'monthly';
-      else if (productId === YEARLY_PRODUCT) plan = 'yearly';
-      else if (productId === ONETIME_PRODUCT) plan = 'lifetime';
+      const checkoutId = params.get('checkout_id') || 'N/A';
+      const orderId = params.get('order_id') || 'N/A';
+      const customerId = params.get('customer_id') || 'N/A';
 
-      detailDiv.innerHTML = `Subscription: ${subscriptionId}<br>Plan: ${plan}<br>Extension ID: ${EXTENSION_ID}`;
+      detailDiv.innerHTML = `Subscription: ${subscriptionId}<br>Checkout: ${checkoutId}<br>Extension ID: ${EXTENSION_ID}`;
 
+      // All Creem params forwarded — background.js will verify via Vercel proxy
       chrome.runtime.sendMessage(EXTENSION_ID, {
         type: 'PAYMENT_SUCCESS',
-        data: { subscriptionId, productId, plan, timestamp: new Date().toISOString() }
+        data: {
+          subscriptionId,
+          checkoutId,
+          orderId,
+          customerId,
+          timestamp: new Date().toISOString()
+        }
       }, (response) => {
         if (chrome.runtime.lastError) {
           statusDiv.className = 'status info';
